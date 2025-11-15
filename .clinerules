@@ -1,0 +1,8 @@
+SUPABASE CONFIGURATION - CRITICAL
+When working with Supabase in this project, ALWAYS use the values from the .env file:
+- VITE_SUPABASE_URL is already set correctly in .env
+- VITE_SUPABASE_ANON_KEY is already set correctly in .env
+- The supabase client is already configured in src/lib/supabase.ts
+- NEVER hardcode different Supabase URL or key values
+- NEVER replace the existing environment variables with placeholder or example values
+- ALWAYS import and use the existing supabase client from 'src/lib/supabase'

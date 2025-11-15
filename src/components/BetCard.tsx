@@ -50,16 +50,7 @@ export const BetCard = ({ bet, selection, onSelect, locked, showActual, confiden
 
 /* ---------------- Regular Card ---------------- */
 const RegularBetCard = ({ bet, selection, onSelect, locked, showActual, confidence: propConfidence, onConfidenceChange, usedConfidences, showConfidenceOnly }: BetCardProps) => {
-  const [lastSelection, setLastSelection] = useState<'A' | 'B' | 'T' | undefined>(undefined);
   const [isVibrating, setIsVibrating] = useState(false);
-
-  // Reset confidence when selection changes
-  if (selection !== lastSelection) {
-    setLastSelection(selection);
-    if (propConfidence !== undefined && propConfidence !== null && onConfidenceChange) {
-      onConfidenceChange(null);
-    }
-  }
 
   const primaryA = Array.isArray(bet.optionA.teamColor) ? bet.optionA.teamColor[0] : bet.optionA.teamColor;
   const secondaryA = Array.isArray(bet.optionA.teamColorSecondary)
@@ -234,16 +225,7 @@ const RegularBetCard = ({ bet, selection, onSelect, locked, showActual, confiden
 
 /* ---------------- Game Total Card ---------------- */
 const GameTotalBetCard = ({ bet, selection, onSelect, locked, showActual, confidence: propConfidence, onConfidenceChange, usedConfidences, showConfidenceOnly }: BetCardProps) => {
-  const [lastSelection, setLastSelection] = useState<'A' | 'B' | 'T' | undefined>(undefined);
   const [isVibrating, setIsVibrating] = useState(false);
-
-  // Reset confidence when selection changes
-  if (selection !== lastSelection) {
-    setLastSelection(selection);
-    if (propConfidence !== undefined && propConfidence !== null && onConfidenceChange) {
-      onConfidenceChange(null);
-    }
-  }
 
   const primary1A = Array.isArray(bet.optionA.teamColor) ? bet.optionA.teamColor[0] : bet.optionA.teamColor;
   const primary2A = Array.isArray(bet.optionA.teamColor) && bet.optionA.teamColor[1] ? bet.optionA.teamColor[1] : primary1A;

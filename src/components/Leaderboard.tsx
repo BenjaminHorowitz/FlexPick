@@ -25,7 +25,7 @@ type SortField = 'win_pct' | 'W' | 'L' | 'Points';
 export const Leaderboard = ({ isOpen, onClose }: LeaderboardProps) => {
   const [rankings, setRankings] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<TabType>('all-time');
+  const [activeTab, setActiveTab] = useState<TabType>('yesterday');
   const [sortField, setSortField] = useState<SortField>('Points');
   const [sortAscending, setSortAscending] = useState(false);
   const { username } = useAuth();

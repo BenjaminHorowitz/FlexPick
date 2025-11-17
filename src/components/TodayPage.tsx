@@ -70,13 +70,10 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
   }, [deadlineTime]);
 
   useEffect(() => {
-    if (!user) {
-      setSelections({});
-      setConfidences({});
-      setLocked(false);
-      setSubmitted(false);
+    if (!user && bets.length > 0) {
+      loadFromLocalStorage();
     }
-  }, [user]);
+  }, [user, bets]);
 
   useEffect(() => {
     if (user && bets.length > 0) {
@@ -156,6 +153,22 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
     }
   };
 
+  const loadFromLocalStorage = () => {
+    try {
+      const savedSelections = localStorage.getItem('draft_selections');
+      const savedConfidences = localStorage.getItem('draft_confidences');
+
+      if (savedSelections) {
+        setSelections(JSON.parse(savedSelections));
+      }
+      if (savedConfidences) {
+        setConfidences(JSON.parse(savedConfidences));
+      }
+    } catch (error) {
+      console.error('Error loading from localStorage:', error);
+    }
+  };
+
   const loadUserPicksFromJson = async () => {
     if (!user) return;
     const { data, error } = await fetchUserPicksMap(user.id);
@@ -164,6 +177,16 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
       return;
     }
     console.log('Loaded data from DB:', data);
+    const isLocked = data?.is_locked ?? false;
+
+    if (isLocked) {
+      setSelections({});
+      setConfidences({});
+      setLocked(true);
+      setSubmitted(true);
+      return;
+    }
+
     const map = data?.picks ?? {};
     const rankingsMap = data?.rankings ?? {};
     console.log('Rankings map:', rankingsMap);
@@ -181,6 +204,8 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
     console.log('Loaded rankings:', loadedRankings);
     setSelections(loaded);
     setConfidences(loadedRankings);
+    setLocked(false);
+    setSubmitted(false);
   };
 
   const handleSelect = (betId: number, option: 'A' | 'B') => {
@@ -205,6 +230,36 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
       return { ...prev, [betId]: confidence };
     });
   };
+
+  // Auto-save picks when selections or confidences change
+  useEffect(() => {
+    const autoSave = async () => {
+      if (locked || isAfterDeadline) return;
+
+      if (!user) {
+        localStorage.setItem('draft_selections', JSON.stringify(selections));
+        localStorage.setItem('draft_confidences', JSON.stringify(confidences));
+        return;
+      }
+
+      if (Object.keys(selections).length === 0 && Object.keys(confidences).length === 0) return;
+
+      const picksMap: Record<string, 'A' | 'B'> = {};
+      Object.entries(selections).forEach(([betId, side]) => {
+        picksMap[String(betId)] = side;
+      });
+
+      const rankingsMap: Record<string, number> = {};
+      Object.entries(confidences).forEach(([betId, ranking]) => {
+        rankingsMap[String(betId)] = ranking;
+      });
+
+      await saveUserPicksMap(user.id, picksMap, rankingsMap);
+    };
+
+    const timeoutId = setTimeout(autoSave, 500);
+    return () => clearTimeout(timeoutId);
+  }, [selections, confidences, user, locked, isAfterDeadline]);
 
   const getUsedConfidences = (excludeBetId?: number): Set<number> => {
     const used = new Set<number>();

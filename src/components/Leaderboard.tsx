@@ -94,16 +94,6 @@ export const Leaderboard = ({ isOpen, onClose }: LeaderboardProps) => {
         {/* Tabs */}
         <div className="flex gap-2 px-4 sm:px-6 pt-4">
           <button
-            onClick={() => setActiveTab('all-time')}
-            className={`flex-1 px-4 py-3 sm:py-2 rounded-lg font-semibold text-sm transition-all min-h-[44px] ${
-              activeTab === 'all-time'
-                ? 'bg-gray-800 text-white shadow-md'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            All Time
-          </button>
-          <button
             onClick={() => setActiveTab('yesterday')}
             className={`flex-1 px-4 py-3 sm:py-2 rounded-lg font-semibold text-sm transition-all min-h-[44px] ${
               activeTab === 'yesterday'
@@ -112,6 +102,16 @@ export const Leaderboard = ({ isOpen, onClose }: LeaderboardProps) => {
             }`}
           >
             Yesterday
+          </button>
+          <button
+            onClick={() => setActiveTab('all-time')}
+            className={`flex-1 px-4 py-3 sm:py-2 rounded-lg font-semibold text-sm transition-all min-h-[44px] ${
+              activeTab === 'all-time'
+                ? 'bg-gray-800 text-white shadow-md'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            All Time
           </button>
         </div>
 

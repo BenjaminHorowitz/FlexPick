@@ -122,10 +122,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = async () => {
     try {
-      await supabase.auth.signOut({ scope: 'local' });
+      await supabase.auth.signOut();
     } catch (error) {
       console.error('Error during sign out:', error);
     }
+    // Clear local state regardless of API response
     setSession(null);
     setUser(null);
     setUsername(null);

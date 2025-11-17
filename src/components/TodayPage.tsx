@@ -179,14 +179,6 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
     console.log('Loaded data from DB:', data);
     const isLocked = data?.is_locked ?? false;
 
-    if (isLocked) {
-      setSelections({});
-      setConfidences({});
-      setLocked(true);
-      setSubmitted(true);
-      return;
-    }
-
     const map = data?.picks ?? {};
     const rankingsMap = data?.rankings ?? {};
     console.log('Rankings map:', rankingsMap);
@@ -204,8 +196,8 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
     console.log('Loaded rankings:', loadedRankings);
     setSelections(loaded);
     setConfidences(loadedRankings);
-    setLocked(false);
-    setSubmitted(false);
+    setLocked(isLocked);
+    setSubmitted(isLocked);
   };
 
   const handleSelect = (betId: number, option: 'A' | 'B') => {

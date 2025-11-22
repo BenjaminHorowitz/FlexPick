@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { LogIn, Info } from 'lucide-react';
 import { MdLeaderboard } from 'react-icons/md';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthModal } from './components/AuthModal';
 import { Leaderboard } from './components/Leaderboard';
 import { UserProfile } from './components/UserProfile';
@@ -135,6 +136,7 @@ function App() {
         }
         @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
       `}</style>
+      <Analytics />
     </div>
   );
 }

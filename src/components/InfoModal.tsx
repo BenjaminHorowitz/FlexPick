@@ -27,7 +27,7 @@ export const InfoModal = ({ isOpen, onClose }: InfoModalProps) => {
           </p>
 
           <p>
-            Every day you'll get <strong>10 unique, balanced matchups</strong>. Pick your side on each matchup and rank your Top-3 Picks before the deadline. These rankings act as the tiebreak, giving you bonus points if they hit and helping separate you from players with the same record.
+            Every day you'll get <strong>unique, balanced matchups</strong>. Pick your side on each matchup and rank your Top-3 Picks before the deadline. These rankings act as the tiebreak, giving you bonus points if they hit and helping separate you from players with the same record.
           </p>
 
           <div className="bg-gray-50 rounded-lg p-4 space-y-2">

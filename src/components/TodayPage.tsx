@@ -280,7 +280,7 @@ export const TodayPage = ({ onTabChange, onAuthModalOpen }: TodayPageProps) => {
         background: 'radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)'
       }}>
         <div className="absolute inset-0 stars-container"></div>
-        <div className="text-white text-xl relative z-10">Loading bets...</div>
+        <div className="text-white text-xl relative z-10">Loading Picks...</div>
       </div>
     );
   }
